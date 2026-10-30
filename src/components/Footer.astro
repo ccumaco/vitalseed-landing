@@ -1,0 +1,35 @@
+---
+import Marca from './Marca.astro';
+import marca from '../data/marca.json';
+---
+
+<footer class="bg-hoja-900 text-hoja-100">
+  <div class="contenedor grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div class="space-y-4">
+      <Marca claro />
+      <p class="max-w-md text-hoja-200">
+        Bebida energizante natural a base de semillas, pensada para estudiantes, deportistas y
+        trabajadores de {marca.ciudad}.
+      </p>
+    </div>
+    <div class="space-y-2 text-sm">
+      <h2 class="font-titulo text-base font-semibold text-papel">Proyecto académico</h2>
+      <p>{marca.institucion}</p>
+      <p>{marca.asignatura}</p>
+      <p>Docente: {marca.docente}</p>
+    </div>
+    <div class="space-y-2 text-sm">
+      <h2 class="font-titulo text-base font-semibold text-papel">Autoras</h2>
+      <ul>{marca.autoras.map((a) => <li>{a}</li>)}</ul>
+    </div>
+  </div>
+  <div class="border-t border-hoja-700">
+    <div class="contenedor py-5 text-sm text-hoja-200">
+      <p>
+        Prototipo con fines académicos, {marca.anio}. VitalSeed no está a la venta y no cuenta aún
+        con registro sanitario del INVIMA. Los beneficios descritos corresponden a la formulación
+        propuesta en el proyecto y no constituyen publicidad de un producto comercial.
+      </p>
+    </div>
+  </div>
+</footer>

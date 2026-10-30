@@ -1,0 +1,32 @@
+[
+  {
+    "nombre": "Chía",
+    "aporta": "Omega-3 y fibra soluble",
+    "detalle": "Al hidratarse forma un gel que libera los nutrientes poco a poco. Es la base de la energía gradual.",
+    "color": "#1b221e"
+  },
+  {
+    "nombre": "Linaza",
+    "aporta": "Ácidos grasos esenciales",
+    "detalle": "Complementa a la chía con lignanos y grasas saludables que sostienen la saciedad y el rendimiento.",
+    "color": "#8f5712"
+  },
+  {
+    "nombre": "Amaranto",
+    "aporta": "Proteína vegetal completa",
+    "detalle": "Una de las pocas semillas con todos los aminoácidos esenciales. Aporta carbohidratos complejos de absorción lenta.",
+    "color": "#e9b86a"
+  },
+  {
+    "nombre": "Panela orgánica",
+    "aporta": "Dulzor natural y minerales",
+    "detalle": "Endulza sin azúcar refinada ni edulcorantes sintéticos. Viene de trapiches de Caldas.",
+    "color": "#c9801e"
+  },
+  {
+    "nombre": "Fruta fresca local",
+    "aporta": "Sabor, vitamina C y antioxidantes",
+    "detalle": "Lulo, mora o maracuyá según cosecha, comprados directo a asociaciones de productores de la región.",
+    "color": "#2f7a52"
+  }
+]

@@ -1,0 +1,378 @@
+---
+import { Image } from 'astro:assets';
+import {
+  Leaf,
+  HeartPulse,
+  Wallet,
+  SearchX,
+  QrCode,
+  Recycle,
+  Tractor,
+  BadgeCheck,
+  MapPin,
+  Clock,
+} from '@lucide/astro';
+import Base from '../layouts/Base.astro';
+import CurvaEnergia from '../components/CurvaEnergia.astro';
+import marca from '../data/marca.json';
+import ingredientes from '../data/ingredientes.json';
+import preguntas from '../data/preguntas.json';
+import botella from '../assets/botella-hero.png';
+
+const precio = new Intl.NumberFormat('es-CO', {
+  style: 'currency',
+  currency: 'COP',
+  maximumFractionDigits: 0,
+}).format(marca.precioReferencia);
+
+// Lo que Laura, el arquetipo del mapa de empatía, dijo que le frustra de lo que hay hoy.
+const dolores = [
+  {
+    icono: HeartPulse,
+    titulo: 'Efectos secundarios',
+    texto:
+      'Insomnio, ansiedad y palpitaciones después de un energizante con cafeína sintética y azúcar refinada.',
+  },
+  {
+    icono: Wallet,
+    titulo: 'Lo saludable cuesta más',
+    texto:
+      'Las opciones naturales que existen son caras o no se consiguen en la tienda de la esquina ni en la universidad.',
+  },
+  {
+    icono: SearchX,
+    titulo: 'No se sabe qué trae',
+    texto:
+      'Etiquetas confusas y publicidad que promete rendimiento sin decir qué hay adentro ni de dónde viene.',
+  },
+];
+
+const ods = [
+  { numero: 3, nombre: 'Salud y bienestar', color: '#4c9f38' },
+  { numero: 8, nombre: 'Trabajo decente y crecimiento económico', color: '#a21942' },
+  { numero: 12, nombre: 'Producción y consumo responsables', color: '#bf8b2e' },
+  { numero: 13, nombre: 'Acción por el clima', color: '#3f7e44' },
+];
+
+const fases = [
+  { ciudad: 'Manizales', detalle: 'Palogrande, El Cable y Centro. Tiendas, gimnasios y cafeterías universitarias.', fase: 'Lanzamiento' },
+  { ciudad: 'Medellín y Cali', detalle: 'Clima y ritmo urbano similares, misma estrategia de distribución.', fase: 'Segunda fase' },
+  { ciudad: 'Bogotá', detalle: 'Enfoque en consumo a temperatura ambiente y entregas a domicilio.', fase: 'Tercera fase' },
+];
+---
+
+<Base>
+  <!-- Hero -->
+  <section id="inicio" class="contenedor grid items-center gap-10 py-14 md:grid-cols-[1.05fr_1fr] md:py-20">
+    <div class="space-y-6">
+      <p class="font-medium text-hoja-500">Bebida energizante natural · {marca.ciudad}</p>
+      <h1 class="text-5xl font-bold text-hoja-900 sm:text-6xl lg:text-7xl">
+        Energía que dura, sin el bajón.
+      </h1>
+      <p class="max-w-xl text-lg text-chia-suave">
+        VitalSeed se hace con chía, linaza, amaranto y fruta de Caldas, endulzada con panela
+        orgánica. Nada de cafeína sintética ni taurina: la energía sale de las semillas y se libera
+        poco a poco durante 6 a 8 horas.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a
+          href="#producto"
+          class="rounded-full bg-hoja-800 px-6 py-3 font-semibold text-papel hover:bg-hoja-700"
+        >
+          Ver qué trae
+        </a>
+        <a
+          href="#problema"
+          class="rounded-full border border-hoja-200 px-6 py-3 font-semibold text-hoja-800 hover:bg-hoja-50"
+        >
+          Por qué existe
+        </a>
+      </div>
+    </div>
+    <Image
+      src={botella}
+      alt="Botella de VitalSeed de 350 ml sobre papel claro, rodeada de chía, linaza, amaranto, un trozo de panela y una tajada de fruta"
+      widths={[480, 768, 1200]}
+      sizes="(min-width: 768px) 45vw, 100vw"
+      class="w-full rounded-botella object-cover shadow-[0_30px_60px_-30px_rgba(23,66,47,0.45)]"
+      loading="eager"
+    />
+  </section>
+
+  <!-- Curva de energía: el argumento central -->
+  <section class="contenedor pb-16 md:pb-24">
+    <CurvaEnergia />
+  </section>
+
+  <!-- El problema -->
+  <section id="problema" class="bg-blanco py-16 md:py-24">
+    <div class="contenedor grid gap-12 md:grid-cols-[1fr_1.3fr]">
+      <div class="space-y-5">
+        <h2 class="titulo-seccion">En Manizales se toma mucha energía artificial</h2>
+        <p class="text-chia-suave">
+          Entre universitarios y trabajadores del centro de la ciudad, el energizante de tienda es
+          parte de la rutina: barato, en todas partes y con mucha publicidad. El costo aparece
+          después, en el sueño, en la ansiedad y en el corazón.
+        </p>
+        <p class="text-chia-suave">
+          Hablamos con Laura, estudiante de 22 años que entrena y estudia tiempo completo. Esto es lo
+          que le pesa de lo que hay hoy en el mercado.
+        </p>
+      </div>
+      <ul class="grid gap-4 sm:grid-cols-1">
+        {dolores.map((d) => (
+          <li class="flex gap-4 rounded-suave border border-papel-sombra bg-papel p-5">
+            <d.icono class="mt-1 size-6 shrink-0 text-rojo-500" aria-hidden="true" />
+            <div>
+              <h3 class="font-titulo text-lg font-semibold text-hoja-900">{d.titulo}</h3>
+              <p class="mt-1 text-chia-suave">{d.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Ficha del producto -->
+  <section id="producto" class="contenedor py-16 md:py-24">
+    <div class="grid gap-10 md:grid-cols-2 md:items-start">
+      <div class="space-y-5">
+        <h2 class="titulo-seccion">Qué es VitalSeed</h2>
+        <p class="text-chia-suave">
+          Una bebida funcional lista para tomar. Las semillas se hidratan, se mezclan con fruta
+          fresca y panela, y se pasteurizan suave para conservar nutrientes. El resultado es una
+          bebida con cuerpo, dulzor natural y energía que se libera de forma gradual.
+        </p>
+        <p class="text-chia-suave">
+          No lleva cafeína sintética, taurina, colorantes ni preservantes. La etiqueta declara el
+          100 % de los ingredientes.
+        </p>
+      </div>
+      <dl class="grid grid-cols-2 gap-x-6 gap-y-6 rounded-botella bg-hoja-50 p-6 sm:p-8">
+        <div>
+          <dt class="text-sm text-chia-suave">Presentación</dt>
+          <dd class="font-titulo text-2xl font-semibold text-hoja-900">{marca.presentacion}</dd>
+        </div>
+        <div>
+          <dt class="text-sm text-chia-suave">Duración de la energía</dt>
+          <dd class="font-titulo text-2xl font-semibold text-hoja-900">6 a 8 h</dd>
+        </div>
+        <div>
+          <dt class="text-sm text-chia-suave">Cafeína añadida</dt>
+          <dd class="font-titulo text-2xl font-semibold text-hoja-900">0 mg</dd>
+        </div>
+        <div>
+          <dt class="text-sm text-chia-suave">Precio de referencia</dt>
+          <dd class="font-titulo text-2xl font-semibold text-hoja-900">{precio}</dd>
+        </div>
+        <div class="col-span-2">
+          <dt class="text-sm text-chia-suave">Envase</dt>
+          <dd class="font-medium text-hoja-900">Botella y etiqueta biodegradables, con código QR de trazabilidad</dd>
+        </div>
+        <div class="col-span-2">
+          <dt class="text-sm text-chia-suave">Pensada para</dt>
+          <dd class="font-medium text-hoja-900">Jornadas largas de estudio, trabajo o entrenamiento</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Ingredientes -->
+  <section id="ingredientes" class="bg-hoja-900 py-16 text-papel md:py-24">
+    <div class="contenedor space-y-10">
+      <div class="max-w-2xl space-y-4">
+        <h2 class="font-titulo text-3xl font-semibold sm:text-4xl">Cinco ingredientes, todos con nombre</h2>
+        <p class="text-hoja-200">
+          Cada uno hace algo distinto en la bebida. Ninguno es un número E ni una palabra que haya que
+          buscar en internet.
+        </p>
+      </div>
+      <ol class="grid gap-px overflow-hidden rounded-botella bg-hoja-700 sm:grid-cols-2 lg:grid-cols-5">
+        {ingredientes.map((i) => (
+          <li class="flex flex-col gap-3 bg-hoja-800 p-6">
+            <span
+              class="size-9 rounded-full ring-2 ring-papel/30"
+              style={`background:${i.color}`}
+              aria-hidden="true"
+            ></span>
+            <h3 class="font-titulo text-xl font-semibold">{i.nombre}</h3>
+            <p class="font-medium text-lima-400">{i.aporta}</p>
+            <p class="text-sm text-hoja-200">{i.detalle}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Trazabilidad -->
+  <section id="trazabilidad" class="contenedor grid gap-10 py-16 md:grid-cols-[1fr_1fr] md:items-center md:py-24">
+    <div class="space-y-5">
+      <h2 class="titulo-seccion">Escaneas el código y ves de dónde viene</h2>
+      <p class="text-chia-suave">
+        Cada botella trae un código QR en la etiqueta. Al escanearlo se abre una ficha del lote con
+        el origen de las semillas y la fruta, la fecha de producción y los certificados de inocuidad.
+        Es la respuesta a la desconfianza que genera la publicidad de los energizantes tradicionales.
+      </p>
+      <ol class="space-y-3 text-chia-suave">
+        <li class="flex gap-3"><span class="font-titulo font-semibold text-hoja-500">1</span> Escaneas el QR con la cámara del celular.</li>
+        <li class="flex gap-3"><span class="font-titulo font-semibold text-hoja-500">2</span> Ves el lote, la fecha y los productores de Caldas que aportaron cada ingrediente.</li>
+        <li class="flex gap-3"><span class="font-titulo font-semibold text-hoja-500">3</span> Consultas el registro sanitario y el análisis nutricional del lote.</li>
+      </ol>
+    </div>
+
+    <!-- Simulación de la ficha que abre el QR -->
+    <div class="mx-auto w-full max-w-sm rounded-botella border border-papel-sombra bg-blanco p-6 shadow-[0_20px_50px_-30px_rgba(27,34,30,0.4)]">
+      <div class="flex items-center justify-between">
+        <span class="font-titulo text-lg font-semibold text-hoja-900">Lote VS-2026-041</span>
+        <QrCode class="size-7 text-hoja-500" aria-hidden="true" />
+      </div>
+      <dl class="mt-5 space-y-4 text-sm">
+        <div class="flex justify-between gap-4 border-b border-papel-sombra pb-3">
+          <dt class="text-chia-suave">Producido</dt>
+          <dd class="text-right font-medium">12 de octubre de 2026, Manizales</dd>
+        </div>
+        <div class="flex justify-between gap-4 border-b border-papel-sombra pb-3">
+          <dt class="text-chia-suave">Chía y amaranto</dt>
+          <dd class="text-right font-medium">Asociación de productores de Villamaría</dd>
+        </div>
+        <div class="flex justify-between gap-4 border-b border-papel-sombra pb-3">
+          <dt class="text-chia-suave">Panela</dt>
+          <dd class="text-right font-medium">Trapiche familiar, Supía</dd>
+        </div>
+        <div class="flex justify-between gap-4 border-b border-papel-sombra pb-3">
+          <dt class="text-chia-suave">Fruta</dt>
+          <dd class="text-right font-medium">Lulo de Riosucio, cosecha de la semana</dd>
+        </div>
+        <div class="flex items-center justify-between gap-4">
+          <dt class="text-chia-suave">Inocuidad</dt>
+          <dd class="flex items-center gap-1.5 font-medium text-hoja-700">
+            <BadgeCheck class="size-4" aria-hidden="true" /> Análisis del lote disponible
+          </dd>
+        </div>
+      </dl>
+      <p class="mt-5 text-xs text-chia-suave">Ficha de ejemplo. Los datos reales se cargarán por lote cuando exista producción.</p>
+    </div>
+  </section>
+
+  <!-- Sostenibilidad -->
+  <section id="sostenibilidad" class="bg-blanco py-16 md:py-24">
+    <div class="contenedor space-y-12">
+      <div class="max-w-2xl space-y-4">
+        <h2 class="titulo-seccion">Lo que pasa antes y después de la botella</h2>
+        <p class="text-chia-suave">
+          El proyecto se diseñó para que la cadena completa, desde la finca hasta el reciclaje, deje
+          más de lo que se lleva.
+        </p>
+      </div>
+      <div class="grid gap-8 md:grid-cols-3">
+        <div class="space-y-3">
+          <Tractor class="size-8 text-hoja-500" aria-hidden="true" />
+          <h3 class="font-titulo text-xl font-semibold text-hoja-900">Compra directa en Caldas</h3>
+          <p class="text-chia-suave">
+            Semillas, panela y fruta se compran sin intermediarios a asociaciones de productores de
+            la región. Menos transporte, mejor precio para quien cultiva.
+          </p>
+        </div>
+        <div class="space-y-3">
+          <Recycle class="size-8 text-hoja-500" aria-hidden="true" />
+          <h3 class="font-titulo text-xl font-semibold text-hoja-900">Envase que vuelve a la tierra</h3>
+          <p class="text-chia-suave">
+            Botella y etiqueta biodegradables, en cumplimiento de la Ley 2232 de 2022 sobre plásticos
+            de un solo uso. Se disponen en los canales de reciclaje y compostaje de la ciudad.
+          </p>
+        </div>
+        <div class="space-y-3">
+          <Leaf class="size-8 text-hoja-500" aria-hidden="true" />
+          <h3 class="font-titulo text-xl font-semibold text-hoja-900">Producción limpia</h3>
+          <p class="text-chia-suave">
+            Proceso de hidratación, mezcla y pasteurización suave con maquinaria estándar, pensado
+            para operar con energía limpia desde la planta piloto.
+          </p>
+        </div>
+      </div>
+      <div>
+        <h3 class="mb-4 font-titulo text-lg font-semibold text-hoja-900">Objetivos de Desarrollo Sostenible con los que aporta</h3>
+        <ul class="flex flex-wrap gap-3">
+          {ods.map((o) => (
+            <li class="flex items-center gap-3 rounded-full border border-papel-sombra bg-papel py-1.5 pr-4 pl-1.5 text-sm">
+              <span
+                class="flex size-8 items-center justify-center rounded-full font-titulo font-bold text-blanco"
+                style={`background:${o.color}`}
+              >
+                {o.numero}
+              </span>
+              {o.nombre}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Para quién -->
+  <section id="para-quien" class="contenedor py-16 md:py-24">
+    <div class="grid gap-10 md:grid-cols-[1fr_1fr] md:items-center">
+      <div class="space-y-5">
+        <h2 class="titulo-seccion">Para quien tiene el día lleno</h2>
+        <p class="text-chia-suave">
+          Estudiantes, deportistas recreativos, empleados y trabajadores independientes entre 18 y
+          40 años, que viven en la ciudad y necesitan rendir sin pagar el precio al día siguiente.
+          Personas que leen la etiqueta y prefieren una marca que les diga la verdad.
+        </p>
+      </div>
+      <blockquote class="rounded-botella border-l-4 border-lima-500 bg-lima-200/40 p-6 sm:p-8">
+        <p class="font-titulo text-xl text-hoja-900 sm:text-2xl">
+          "Quiero energía para estudiar y entrenar, pero no quiero quedarme sin dormir ni tomarme
+          algo que no sé qué trae."
+        </p>
+        <footer class="mt-4 text-sm text-chia-suave">
+          Laura, 22 años, estudiante universitaria en Manizales. Arquetipo de cliente del proyecto.
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Dónde estará -->
+  <section id="donde" class="bg-hoja-50 py-16 md:py-24">
+    <div class="contenedor space-y-10">
+      <div class="max-w-2xl space-y-4">
+        <h2 class="titulo-seccion">Dónde estará</h2>
+        <p class="text-chia-suave">
+          El plan arranca en Manizales y crece por fases hacia las ciudades con más población activa
+          del país.
+        </p>
+      </div>
+      <ol class="grid gap-6 md:grid-cols-3">
+        {fases.map((f) => (
+          <li class="space-y-2 rounded-suave bg-blanco p-6">
+            <p class="flex items-center gap-2 text-sm text-hoja-500">
+              <Clock class="size-4" aria-hidden="true" /> {f.fase}
+            </p>
+            <h3 class="flex items-center gap-2 font-titulo text-xl font-semibold text-hoja-900">
+              <MapPin class="size-5 text-panela-500" aria-hidden="true" /> {f.ciudad}
+            </h3>
+            <p class="text-chia-suave">{f.detalle}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Preguntas -->
+  <section id="preguntas" class="contenedor py-16 md:py-24">
+    <div class="grid gap-10 md:grid-cols-[1fr_1.6fr]">
+      <h2 class="titulo-seccion">Preguntas frecuentes</h2>
+      <div class="divide-y divide-papel-sombra">
+        {preguntas.map((p) => (
+          <details class="group py-4">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-titulo text-lg font-semibold text-hoja-900 marker:hidden">
+              {p.pregunta}
+              <span class="shrink-0 text-2xl leading-none text-hoja-500 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
+            </summary>
+            <p class="mt-3 max-w-prose text-chia-suave">{p.respuesta}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

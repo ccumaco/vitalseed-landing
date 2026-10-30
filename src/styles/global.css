@@ -1,0 +1,81 @@
+@import 'tailwindcss';
+
+/*
+ * Paleta de VitalSeed. Los nombres hablan de los materiales del producto:
+ * hoja (verde), lima (energía), panela (ámbar), chía (tinta) y papel (fondo).
+ * Se borran los colores por defecto de Tailwind para no salirse de la marca.
+ */
+@theme {
+  --color-*: initial;
+
+  --color-hoja-50: #eef5ee;
+  --color-hoja-100: #d6e8d6;
+  --color-hoja-200: #aed0b0;
+  --color-hoja-300: #7fb386;
+  --color-hoja-500: #2f7a52;
+  --color-hoja-700: #1f5a3c;
+  --color-hoja-800: #17422f;
+  --color-hoja-900: #0f2d21;
+
+  --color-lima-200: #e2f5b7;
+  --color-lima-400: #b9e45c;
+  --color-lima-500: #9bd63b;
+  --color-lima-700: #5f8f17;
+
+  --color-panela-100: #f8e7cc;
+  --color-panela-300: #e9b86a;
+  --color-panela-500: #c9801e;
+  --color-panela-700: #8f5712;
+
+  --color-chia: #1b221e;
+  --color-chia-suave: #4b5650;
+  --color-papel: #f6f8f2;
+  --color-papel-sombra: #e9eee3;
+  --color-blanco: #ffffff;
+  --color-rojo-500: #b8442e;
+  --color-rojo-100: #f5ddd6;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-titulo: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-texto: 'Instrument Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-suave: 0.75rem;
+  --radius-botella: 2rem;
+}
+
+@layer base {
+  html {
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+  body {
+    @apply bg-papel font-texto text-chia antialiased;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    @apply font-titulo text-balance;
+    font-variation-settings: 'opsz' 96, 'wdth' 100;
+    letter-spacing: -0.015em;
+    line-height: 1.08;
+  }
+  p { @apply text-pretty; }
+  :focus-visible {
+    outline: 3px solid var(--color-panela-500);
+    outline-offset: 3px;
+  }
+}
+
+@utility contenedor {
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+}
+
+@utility titulo-seccion {
+  @apply font-titulo text-3xl font-semibold text-hoja-900 sm:text-4xl;
+}

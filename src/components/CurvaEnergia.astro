@@ -1,0 +1,91 @@
+---
+/**
+ * Curva de energía: compara la liberación gradual de VitalSeed (6 a 8 horas)
+ * con el pico y la caída de un energizante tradicional. Es un esquema
+ * conceptual del proyecto, no una medición clínica.
+ */
+interface Props {
+  class?: string;
+}
+const { class: clase = '' } = Astro.props;
+
+const horas = [0, 2, 4, 6, 8];
+// Eje X: 0 h → x=40, 8 h → x=560. Eje Y: 0 energía → y=250, máximo → y=40.
+const x = (h: number) => 40 + (h / 8) * 520;
+---
+
+<figure class:list={['rounded-botella bg-hoja-900 p-5 text-papel sm:p-7', clase]}>
+  <figcaption class="mb-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+    <span class="font-titulo text-lg font-semibold">Energía percibida a lo largo del día</span>
+    <span class="text-sm text-hoja-200">Esquema del proyecto, horas desde la primera toma</span>
+  </figcaption>
+
+  <svg
+    viewBox="0 0 600 290"
+    role="img"
+    aria-labelledby="curva-titulo curva-desc"
+    class="w-full"
+  >
+    <title id="curva-titulo">Comparación de curvas de energía</title>
+    <desc id="curva-desc">
+      VitalSeed sube de forma gradual, se mantiene alta entre la hora 1 y la hora 7, y baja
+      suavemente hacia la hora 8. Un energizante tradicional sube de golpe en la primera hora y cae
+      por debajo del nivel inicial hacia la hora 3.
+    </desc>
+
+    <!-- Línea base y marcas de hora -->
+    <line x1="40" y1="250" x2="560" y2="250" stroke="#2f7a52" stroke-width="1" />
+    {horas.map((h) => (
+      <g>
+        <line x1={x(h)} y1="250" x2={x(h)} y2="256" stroke="#7fb386" stroke-width="1" />
+        <text x={x(h)} y="274" text-anchor="middle" font-size="13" fill="#aed0b0">{h} h</text>
+      </g>
+    ))}
+    <text x="40" y="24" font-size="13" fill="#aed0b0">más energía</text>
+
+    <!-- Energizante tradicional: pico rápido y caída -->
+    <path
+      d="M40 215 C 60 215, 70 60, 110 55 C 150 50, 160 120, 190 190 C 210 240, 240 238, 300 232 L 560 232"
+      fill="none"
+      stroke="#e9b86a"
+      stroke-width="3"
+      stroke-dasharray="7 6"
+      stroke-linecap="round"
+    />
+    <!-- Zona del bajón -->
+    <path
+      d="M190 190 C 210 240, 240 238, 300 232 L 300 250 L 190 250 Z"
+      fill="#e9b86a"
+      fill-opacity="0.18"
+    />
+    <text x="252" y="222" font-size="13" fill="#e9b86a" text-anchor="middle">el bajón</text>
+
+    <!-- VitalSeed: subida gradual y meseta -->
+    <path
+      d="M40 215 C 90 210, 110 95, 170 85 C 240 76, 380 78, 440 90 C 500 102, 530 170, 560 205"
+      fill="none"
+      stroke="#9bd63b"
+      stroke-width="4.5"
+      stroke-linecap="round"
+    />
+    <path
+      d="M40 215 C 90 210, 110 95, 170 85 C 240 76, 380 78, 440 90 C 500 102, 530 170, 560 205 L 560 250 L 40 250 Z"
+      fill="#9bd63b"
+      fill-opacity="0.12"
+    />
+  </svg>
+
+  <ul class="mt-4 flex flex-wrap gap-x-7 gap-y-2 text-sm">
+    <li class="flex items-center gap-2">
+      <span class="inline-block h-1.5 w-7 rounded-full bg-lima-500" aria-hidden="true"></span>
+      VitalSeed: liberación gradual, 6 a 8 horas
+    </li>
+    <li class="flex items-center gap-2">
+      <span
+        class="inline-block h-0 w-7 border-t-2 border-dashed border-panela-300"
+        aria-hidden="true"
+      ></span>
+      Energizante tradicional: pico de cafeína y azúcar, caída a las 3 horas
+    </li>
+  </ul>
+</figure>
