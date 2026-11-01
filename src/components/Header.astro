@@ -1,11 +1,14 @@
 ---
+import { Menu } from '@lucide/astro';
 import Marca from './Marca.astro';
 
 const enlaces = [
   { href: '#problema', texto: 'Por qué' },
+  { href: '#producto', texto: 'Qué trae' },
   { href: '#ingredientes', texto: 'Ingredientes' },
   { href: '#trazabilidad', texto: 'Trazabilidad' },
   { href: '#sostenibilidad', texto: 'Sostenibilidad' },
+  { href: '#tiendas', texto: 'Tiendas y gimnasios' },
   { href: '#preguntas', texto: 'Preguntas' },
 ];
 ---
@@ -13,18 +16,39 @@ const enlaces = [
 <header class="sticky top-0 z-40 border-b border-papel-sombra bg-papel/90 backdrop-blur">
   <div class="contenedor flex h-16 items-center justify-between gap-4">
     <a href="#inicio" aria-label="VitalSeed, ir al inicio"><Marca /></a>
-    <nav aria-label="Secciones">
-      <ul class="hidden items-center gap-6 text-[0.95rem] font-medium text-chia-suave md:flex">
+    <nav aria-label="Secciones" class="hidden md:block">
+      <ul class="flex items-center gap-5 text-[0.95rem] font-medium text-chia-suave">
         {enlaces.map((e) => (
           <li><a href={e.href} class="hover:text-hoja-800">{e.texto}</a></li>
         ))}
       </ul>
     </nav>
-    <a
-      href="#producto"
-      class="rounded-full bg-hoja-800 px-4 py-2 text-sm font-semibold text-papel hover:bg-hoja-700"
-    >
-      Conocer la bebida
-    </a>
+    <div class="flex items-center gap-2">
+      <a
+        href="#producto"
+        class="rounded-full bg-hoja-800 px-4 py-2 text-sm font-semibold text-papel hover:bg-hoja-700"
+      >
+        Conocer la bebida
+      </a>
+      <!-- Menú móvil sin JavaScript: un <details> que despliega las mismas anclas. -->
+      <details class="relative md:hidden">
+        <summary
+          class="flex size-10 cursor-pointer list-none items-center justify-center rounded-full border border-hoja-200 text-hoja-800 marker:hidden"
+          aria-label="Abrir menú de secciones"
+        >
+          <Menu class="size-5" aria-hidden="true" />
+        </summary>
+        <nav
+          aria-label="Secciones (móvil)"
+          class="absolute right-0 mt-2 w-56 rounded-suave border border-papel-sombra bg-blanco p-2 shadow-[0_20px_40px_-20px_rgba(27,34,30,0.35)]"
+        >
+          <ul class="divide-y divide-papel-sombra text-[0.95rem] font-medium text-chia">
+            {enlaces.map((e) => (
+              <li><a href={e.href} class="block px-3 py-2.5 hover:text-hoja-800">{e.texto}</a></li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>

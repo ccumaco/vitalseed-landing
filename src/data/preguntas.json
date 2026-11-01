@@ -8,6 +8,14 @@
     "respuesta": "La curva de energía está diseñada para sostenerse entre 6 y 8 horas, sin el pico y la caída brusca de las bebidas energizantes tradicionales."
   },
   {
+    "pregunta": "¿Cuánta azúcar y cuántas calorías tiene?",
+    "respuesta": "Según la formulación propuesta, una botella de 350 ml aporta cerca de 180 kcal y 14 g de azúcares, que vienen de la panela (unos 10 g) y de la fruta. No lleva azúcar refinada ni edulcorantes. La tabla nutricional de la ficha es una estimación y se reemplazará por el análisis de laboratorio del primer lote."
+  },
+  {
+    "pregunta": "¿Necesita nevera? ¿Cuánto dura?",
+    "respuesta": "Sí. Al no tener preservantes, VitalSeed se conserva refrigerada entre 2 y 6 °C. El objetivo de diseño es una vida útil de 21 días cerrada y de 24 horas una vez abierta. La fecha de vencimiento irá impresa en cada botella y en la ficha del lote que abre el código QR."
+  },
+  {
     "pregunta": "¿Pueden consumirla menores de edad?",
     "respuesta": "Al no contener estimulantes sintéticos, la fórmula se diseñó para ser segura en todas las edades. De todas formas, el producto final deberá cumplir el registro sanitario del INVIMA y la Resolución 4150 de 2009 antes de salir al mercado."
   },

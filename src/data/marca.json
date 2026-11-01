@@ -7,7 +7,11 @@
   "precioReferencia": 6500,
   "institucion": "Corporación Unificada Nacional de Educación Superior (CUN)",
   "asignatura": "Creación de Empresas 1 – Modelos de Innovación",
-  "autoras": ["Dafne Valeria Bustos Romero", "Danery Paola Carmona Rivera"],
+  "autoras": [
+    "Dafne Valeria Bustos Romero",
+    "Danery Paola Carmona Rivera"
+  ],
   "docente": "Carlos Mauricio Báez Palencia",
-  "anio": 2026
+  "anio": 2026,
+  "precioMayorista": 4500
 }

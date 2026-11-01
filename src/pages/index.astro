@@ -11,6 +11,10 @@ import {
   BadgeCheck,
   MapPin,
   Clock,
+  Info,
+  Store,
+  Thermometer,
+  PackageCheck,
 } from '@lucide/astro';
 import Base from '../layouts/Base.astro';
 import CurvaEnergia from '../components/CurvaEnergia.astro';
@@ -24,6 +28,26 @@ const precio = new Intl.NumberFormat('es-CO', {
   currency: 'COP',
   maximumFractionDigits: 0,
 }).format(marca.precioReferencia);
+const precioMayorista = new Intl.NumberFormat('es-CO', {
+  style: 'currency',
+  currency: 'COP',
+  maximumFractionDigits: 0,
+}).format(marca.precioMayorista);
+
+// Estimación a partir de la formulación (12 g chía, 6 g linaza, 8 g amaranto, 12 g panela,
+// 50 g pulpa de fruta). Se reemplaza por el análisis de laboratorio del primer lote.
+const nutricion = [
+  { nombre: 'Calorías', valor: '180 kcal' },
+  { nombre: 'Carbohidratos', valor: '26 g' },
+  { nombre: 'Azúcares (panela y fruta)', valor: '14 g' },
+  { nombre: 'Fibra', valor: '6 g' },
+  { nombre: 'Proteína', valor: '4 g' },
+  { nombre: 'Grasas totales', valor: '6 g' },
+  { nombre: 'Omega-3 (ALA)', valor: '2 g' },
+  { nombre: 'Sodio', valor: '15 mg' },
+  { nombre: 'Cafeína total', valor: '0 mg' },
+  { nombre: 'Azúcar refinada, taurina, colorantes, preservantes', valor: '0' },
+];
 
 // Lo que Laura, el arquetipo del mapa de empatía, dijo que le frustra de lo que hay hoy.
 const dolores = [
@@ -57,11 +81,22 @@ const ods = [
 const fases = [
   { ciudad: 'Manizales', detalle: 'Palogrande, El Cable y Centro. Tiendas, gimnasios y cafeterías universitarias.', fase: 'Lanzamiento' },
   { ciudad: 'Medellín y Cali', detalle: 'Clima y ritmo urbano similares, misma estrategia de distribución.', fase: 'Segunda fase' },
-  { ciudad: 'Bogotá', detalle: 'Enfoque en consumo a temperatura ambiente y entregas a domicilio.', fase: 'Tercera fase' },
+  { ciudad: 'Bogotá', detalle: 'Enfoque en oficinas, entregas a domicilio y suscripción semanal.', fase: 'Tercera fase' },
 ];
 ---
 
 <Base>
+  <!-- Aviso de estado del proyecto, visible antes de cualquier promesa -->
+  <div class="bg-panela-100 text-panela-700">
+    <p class="contenedor flex items-start gap-2 py-2.5 text-sm">
+      <Info class="mt-0.5 size-4 shrink-0" aria-hidden="true" />
+      <span>
+        VitalSeed es un prototipo académico de la CUN. Todavía no está a la venta ni tiene registro
+        sanitario del INVIMA; los datos de esta página describen la formulación propuesta.
+      </span>
+    </p>
+  </div>
+
   <!-- Hero -->
   <section id="inicio" class="contenedor grid items-center gap-10 py-14 md:grid-cols-[1.05fr_1fr] md:py-20">
     <div class="space-y-6">
@@ -71,8 +106,8 @@ const fases = [
       </h1>
       <p class="max-w-xl text-lg text-chia-suave">
         VitalSeed se hace con chía, linaza, amaranto y fruta de Caldas, endulzada con panela
-        orgánica. Nada de cafeína sintética ni taurina: la energía sale de las semillas y se libera
-        poco a poco durante 6 a 8 horas.
+        orgánica. Cero cafeína y cero taurina: la energía sale de las semillas y se libera poco a
+        poco durante 6 a 8 horas.
       </p>
       <div class="flex flex-wrap gap-3">
         <a
@@ -144,8 +179,25 @@ const fases = [
           bebida con cuerpo, dulzor natural y energía que se libera de forma gradual.
         </p>
         <p class="text-chia-suave">
-          No lleva cafeína sintética, taurina, colorantes ni preservantes. La etiqueta declara el
-          100 % de los ingredientes.
+          No lleva cafeína de ningún origen, taurina, colorantes ni preservantes. La etiqueta
+          declara el 100 % de los ingredientes.
+        </p>
+        <h3 class="pt-2 font-titulo text-lg font-semibold text-hoja-900">
+          Información nutricional estimada por botella
+        </h3>
+        <table class="w-full text-sm">
+          <tbody class="divide-y divide-papel-sombra">
+            {nutricion.map((n) => (
+              <tr>
+                <th scope="row" class="py-1.5 pr-4 text-left font-normal text-chia-suave">{n.nombre}</th>
+                <td class="py-1.5 text-right font-medium text-hoja-900">{n.valor}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="text-xs text-chia-suave">
+          Estimación calculada a partir de la formulación propuesta. Se reemplazará por el análisis
+          de laboratorio del primer lote antes de cualquier venta.
         </p>
       </div>
       <dl class="grid grid-cols-2 gap-x-6 gap-y-6 rounded-botella bg-hoja-50 p-6 sm:p-8">
@@ -158,12 +210,16 @@ const fases = [
           <dd class="font-titulo text-2xl font-semibold text-hoja-900">6 a 8 h</dd>
         </div>
         <div>
-          <dt class="text-sm text-chia-suave">Cafeína añadida</dt>
+          <dt class="text-sm text-chia-suave">Cafeína total</dt>
           <dd class="font-titulo text-2xl font-semibold text-hoja-900">0 mg</dd>
         </div>
         <div>
-          <dt class="text-sm text-chia-suave">Precio de referencia</dt>
+          <dt class="text-sm text-chia-suave">Precio al público (referencia)</dt>
           <dd class="font-titulo text-2xl font-semibold text-hoja-900">{precio}</dd>
+        </div>
+        <div class="col-span-2">
+          <dt class="text-sm text-chia-suave">Conservación</dt>
+          <dd class="font-medium text-hoja-900">Refrigerada entre 2 y 6 °C. Vida útil objetivo: 21 días cerrada, 24 horas abierta</dd>
         </div>
         <div class="col-span-2">
           <dt class="text-sm text-chia-suave">Envase</dt>
@@ -315,9 +371,15 @@ const fases = [
       <div class="space-y-5">
         <h2 class="titulo-seccion">Para quien tiene el día lleno</h2>
         <p class="text-chia-suave">
-          Estudiantes, deportistas recreativos, empleados y trabajadores independientes entre 18 y
-          40 años, que viven en la ciudad y necesitan rendir sin pagar el precio al día siguiente.
-          Personas que leen la etiqueta y prefieren una marca que les diga la verdad.
+          Estudiantes, deportistas recreativos, empleados con turnos largos y trabajadores
+          independientes entre 18 y 40 años, que viven en la ciudad y necesitan rendir sin pagar el
+          precio al día siguiente. Personas que leen la etiqueta y prefieren una marca que les diga
+          la verdad.
+        </p>
+        <p class="text-chia-suave">
+          También para quien ya tuvo un susto con el corazón o el sueño y no quiere volver a la
+          cafeína, y para quien cuida el azúcar: por eso la tabla nutricional está a la vista y no
+          detrás de un código.
         </p>
       </div>
       <blockquote class="rounded-botella border-l-4 border-lima-500 bg-lima-200/40 p-6 sm:p-8">
@@ -355,6 +417,50 @@ const fases = [
           </li>
         ))}
       </ol>
+    </div>
+  </section>
+
+  <!-- Para tiendas y gimnasios -->
+  <section id="tiendas" class="contenedor py-16 md:py-24">
+    <div class="grid gap-10 md:grid-cols-[1fr_1.4fr] md:items-start">
+      <div class="space-y-5">
+        <h2 class="titulo-seccion">Para tiendas y gimnasios</h2>
+        <p class="text-chia-suave">
+          Si administras un punto de venta en Manizales, estas son las condiciones con las que
+          VitalSeed planea llegar a tu nevera. Son compromisos de diseño del proyecto; se confirman
+          con la producción piloto.
+        </p>
+        <p class="text-chia-suave">
+          El canal de pedidos será WhatsApp Business, con lista de precios y entrega semanal. Se
+          abrirá junto con el primer lote.
+        </p>
+      </div>
+      <dl class="grid gap-5 sm:grid-cols-2">
+        <div class="rounded-suave border border-papel-sombra bg-blanco p-5">
+          <dt class="flex items-center gap-2 text-sm text-chia-suave">
+            <BadgeCheck class="size-4 text-hoja-500" aria-hidden="true" /> Registro INVIMA
+          </dt>
+          <dd class="mt-1 font-medium text-hoja-900">En preparación. Solicitud prevista para el primer semestre de 2027, antes de cualquier venta</dd>
+        </div>
+        <div class="rounded-suave border border-papel-sombra bg-blanco p-5">
+          <dt class="flex items-center gap-2 text-sm text-chia-suave">
+            <Thermometer class="size-4 text-hoja-500" aria-hidden="true" /> Conservación
+          </dt>
+          <dd class="mt-1 font-medium text-hoja-900">Refrigerada entre 2 y 6 °C. 21 días cerrada, con fecha de vencimiento impresa en cada botella</dd>
+        </div>
+        <div class="rounded-suave border border-papel-sombra bg-blanco p-5">
+          <dt class="flex items-center gap-2 text-sm text-chia-suave">
+            <Store class="size-4 text-hoja-500" aria-hidden="true" /> Precio y pedido mínimo
+          </dt>
+          <dd class="mt-1 font-medium text-hoja-900">{precioMayorista} por unidad, pedido mínimo de 12 botellas, sugerido al público {precio}</dd>
+        </div>
+        <div class="rounded-suave border border-papel-sombra bg-blanco p-5">
+          <dt class="flex items-center gap-2 text-sm text-chia-suave">
+            <PackageCheck class="size-4 text-hoja-500" aria-hidden="true" /> Rotación
+          </dt>
+          <dd class="mt-1 font-medium text-hoja-900">Entrega semanal y cambio sin costo de las unidades que lleguen a vencer sin venderse</dd>
+        </div>
+      </dl>
     </div>
   </section>
 

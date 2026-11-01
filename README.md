@@ -4,7 +4,7 @@ Landing page informativa del proyecto **VitalSeed**, una bebida energizante natu
 semillas (chía, linaza, amaranto), fruta de Caldas y panela orgánica. Proyecto de creación de
 empresa de la CUN (Creación de Empresas 1 – Modelos de Innovación), Manizales, 2026.
 
-Sitio público: https://vitalseed.vercel.app
+Sitio público: https://vitalseed-landing.vercel.app
 
 ## Stack
 
@@ -44,4 +44,4 @@ npm run preview
 ## Despliegue
 
 Vercel detecta Astro automáticamente. La variable opcional `SITE_URL` define el dominio
-canónico y del sitemap (por defecto `https://vitalseed.vercel.app`).
+canónico y del sitemap (por defecto `https://vitalseed-landing.vercel.app`).
